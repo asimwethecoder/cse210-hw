@@ -1,5 +1,11 @@
 using System;
 
+// Exceeding Requirements / Creativity:
+// 1. Used a unique separator (~|~) during file serialization to cleanly handle any commas or 
+//    special characters within user journal text without breaking file loading logic.
+// 2. Encapsulated prompt handling entirely within the PromptGenerator class to keep the 
+//    main loop clean and modular.
+
 class Program
 {
     static void Main(string[] args)
