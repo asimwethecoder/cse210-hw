@@ -11,7 +11,6 @@ public class Scripture
         _reference = reference;
         _words = new List<Word>();
 
-        // Split text by spaces and create Word objects
         string[] wordArray = text.Split(" ");
         foreach (string word in wordArray)
         {
@@ -22,7 +21,26 @@ public class Scripture
 
     public void HideRandomWords(int numberToHide)
     {
-        // Stub implementation
+        // Find words that are not yet hidden
+        List<Word> visibleWords = new List<Word>();
+        foreach (Word word in _words)
+        {
+            if (!word.IsHidden())
+            {
+                visibleWords.Add(word);
+            }
+        }
+
+        // Randomly hide up to 'numberToHide' words
+        Random random = new Random();
+        int countToHide = Math.Min(numberToHide, visibleWords.Count);
+
+        for (int i = 0; i < countToHide; i++)
+        {
+            int index = random.Next(visibleWords.Count);
+            visibleWords[index].Hide();
+            visibleWords.RemoveAt(index);
+        }
     }
 
     public string GetDisplayText()
@@ -37,6 +55,13 @@ public class Scripture
 
     public bool IsCompletelyHidden()
     {
-        return false; // Stub return
+        foreach (Word word in _words)
+        {
+            if (!word.IsHidden())
+            {
+                return false; // Found at least one visible word
+            }
+        }
+        return true; // All words are hidden
     }
 }
